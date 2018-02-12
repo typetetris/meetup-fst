@@ -511,6 +511,7 @@ data EventSelfPayStatus = ESPSNone |
                           Refunded
                           deriving (Eq, Show, Generic)
 
+eventSelfPayStatusToJSON :: EventSelfPayStatus -> Text
 eventSelfPayStatusToJSON ESPSNone = "none"
 eventSelfPayStatusToJSON Paid = "paid"
 eventSelfPayStatusToJSON PartiallyPaid = "partially_paid"
@@ -614,6 +615,7 @@ data RefundPolicies = NoRefunds |
                       EventCancellation |
                       EventRescheduled deriving (Eq, Show, Generic)
 
+refundPoliciesToJSON :: RefundPolicies -> Text
 refundPoliciesToJSON NoRefunds          = "no_refunds"
 refundPoliciesToJSON MemberCancellation = "member_cancellation"
 refundPoliciesToJSON EventCancellation  = "event_cancellation"

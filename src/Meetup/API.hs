@@ -29,6 +29,18 @@ type API = Capture "urlname" Text :>
 api :: Proxy API
 api = Proxy
 
+groupEvents :: Text
+            -> Maybe Bool
+            -> [Text]
+            -> Maybe Int
+            -> Maybe Scroll
+            -> [Status]
+            -> Maybe Text
+            -> ClientM
+                 (Headers
+                    '[Header "X-RateLimit-Limit" Int,
+                      Header "X-RateLimit-Remaining" Int, Header "X-RateLimit-Reset" Int]
+                    [Event])
 groupEvents = client api
 
 minimalGroupEvents :: Text -> Maybe Text -> ClientM (RateLimits [Event])
