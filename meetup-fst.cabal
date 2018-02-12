@@ -1,0 +1,36 @@
+name: meetup-fst
+version: 0.0.0.1
+cabal-version: >= 1.10
+build-type: Simple
+
+library
+  hs-source-dirs: src
+  ghc-options: -Wall -fwarn-tabs
+  build-depends:   base >= 4.7 && < 5
+                 , servant
+                 , servant-client
+                 , text
+                 , bytestring
+                 , http-api-data
+                 , http-client
+                 , time
+                 , scientific
+                 , aeson
+                 , unordered-containers
+
+  exposed-modules:   Meetup.API
+                   , Meetup.Data
+  other-modules: Meetup.API.Internal
+
+executable meetup-fst
+  hs-source-dirs: app
+  main-is: Main.hs
+  ghc-options: -Wall -fwarn-tabs
+  build-depends:   base >= 4.7 && < 5
+                 , meetup-fst
+                 , optparse-applicative
+                 , text
+                 , http-client
+                 , http-client-tls
+                 , servant
+                 , servant-client
