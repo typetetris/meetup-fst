@@ -46,3 +46,5 @@ executable meetup-fst
                  , http-client-tls
                  , servant
                  , servant-client
+                 , yaml
+                 , bytestring

@@ -1,8 +1,10 @@
 {-# LANGUAGE OverloadedStrings #-}
 module Main where
 
+import qualified Data.ByteString         as B
 import           Data.Semigroup          ((<>))
 import           Data.Text               hiding (group)
+import qualified Data.Yaml.Pretty        as YP
 import           Meetup.API
 import           Network.HTTP.Client
 import           Network.HTTP.Client.TLS
@@ -46,6 +48,6 @@ main = do
       print err
     (Right result) -> do
       putStrLn "Result:"
-      print $ getResponse result
+      B.putStr $ YP.encodePretty (YP.setConfDropNull True YP.defConfig) $ getResponse result
       putStrLn "Rate limiting info:"
       print $ getHeaders result
