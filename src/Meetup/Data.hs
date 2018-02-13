@@ -1,22 +1,22 @@
-{-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DeriveGeneric     #-}
 {-# LANGUAGE OverloadedStrings #-}
 module Meetup.Data where
 
-import GHC.Generics
-import Data.Monoid ((<>))
-import qualified Data.List as L (stripPrefix)
-import Data.Maybe (fromMaybe)
-import Data.Text (Text)
-import Data.Scientific
-import Data.Time.Calendar
-import Data.Time.LocalTime
-import Data.Time.Clock
+import qualified Data.List           as L (stripPrefix)
+import           Data.Maybe          (fromMaybe)
+import           Data.Monoid         ((<>))
+import           Data.Scientific
+import           Data.Text           (Text)
+import           Data.Time.Calendar
+import           Data.Time.Clock
+import           Data.Time.LocalTime
+import           GHC.Generics
 
-import Data.Aeson
+import           Data.Aeson
 
-import Web.HttpApiData
+import           Web.HttpApiData
 
-import Meetup.API.Internal
+import           Meetup.API.Internal
 
 data PhotoType = EventPhoto | MemberPhoto deriving (Eq, Show, Generic)
 
@@ -209,8 +209,8 @@ instance FromJSON Visibility where
 data VenueVisibility = VVPublic | VVMembers deriving (Eq, Show, Generic)
 
 venueVisibilityToJSON :: VenueVisibility -> Text
-venueVisibilityToJSON VVPublic        = "public"
-venueVisibilityToJSON VVMembers       = "members"
+venueVisibilityToJSON VVPublic  = "public"
+venueVisibilityToJSON VVMembers = "members"
 
 instance ToJSON VenueVisibility where
   toJSON = genericToJSONString venueVisibilityToJSON
@@ -360,20 +360,20 @@ instance ToJSON Event where
   toEncoding = genericToEncoding (myOptions "event_")
 instance FromJSON Event where parseJSON = genericParseJSON (myOptions "event_")
 
-data Venue = Venue { venue_address_1 :: Text
-                   , venue_address_2 :: Maybe Text -- not present in test, maybe only if set
-                   , venue_address_3 :: Maybe Text -- not present in test, maybe only if set
-                   , venue_city :: Text
-                   , venue_country :: Text
-                   , venue_id :: Integer
-                   , venue_lat :: Scientific
+data Venue = Venue { venue_address_1              :: Text
+                   , venue_address_2              :: Maybe Text -- not present in test, maybe only if set
+                   , venue_address_3              :: Maybe Text -- not present in test, maybe only if set
+                   , venue_city                   :: Text
+                   , venue_country                :: Text
+                   , venue_id                     :: Integer
+                   , venue_lat                    :: Scientific
                    , venue_localized_country_name :: Text
-                   , venue_lon :: Scientific
-                   , venue_name :: Text
-                   , venue_phone :: Maybe Text -- not present in test, maybe only if set
-                   , venue_repinned :: Bool
-                   , venue_state :: Maybe Text -- not present in test, maybe only if set
-                   , venue_zip :: Maybe Text -- n.p.i.t.
+                   , venue_lon                    :: Scientific
+                   , venue_name                   :: Text
+                   , venue_phone                  :: Maybe Text -- not present in test, maybe only if set
+                   , venue_repinned               :: Bool
+                   , venue_state                  :: Maybe Text -- not present in test, maybe only if set
+                   , venue_zip                    :: Maybe Text -- n.p.i.t.
                    } deriving (Eq, Show, Generic)
 
 instance ToJSON Venue where
@@ -382,7 +382,7 @@ instance ToJSON Venue where
 instance FromJSON Venue where parseJSON = genericParseJSON (myOptions "venue_")
 
 
-data Question = Question { question_id :: Integer
+data Question = Question { question_id       :: Integer
                          , question_question :: Text
                          } deriving (Eq, Show, Generic)
 
@@ -392,21 +392,21 @@ instance ToJSON Question where
 instance FromJSON Question where parseJSON = genericParseJSON (myOptions "question_")
 
 
-data EventSeries = EventSeries { eventSeries_description :: Text
-                               , eventSeries_end_date :: Integer
-                               , eventSeries_id :: Integer
-                               , eventSeries_monthly :: Maybe Monthly
-                               , eventSeries_start_date :: Integer
+data EventSeries = EventSeries { eventSeries_description       :: Text
+                               , eventSeries_end_date          :: Integer
+                               , eventSeries_id                :: Integer
+                               , eventSeries_monthly           :: Maybe Monthly
+                               , eventSeries_start_date        :: Integer
                                , eventSeries_template_event_id :: Integer
-                               , eventSeries_weekly :: Maybe Weekly
+                               , eventSeries_weekly            :: Maybe Weekly
                                } deriving (Eq, Show, Generic)
 instance ToJSON EventSeries where
   toJSON = genericToJSON (myOptions "eventSeries_")
   toEncoding = genericToEncoding (myOptions "eventSeries_")
 instance FromJSON EventSeries where parseJSON = genericParseJSON (myOptions "eventSeries_")
 
-data Monthly = Monthly { monthly_day_of_week :: Int
-                       , monthly_interval :: Integer
+data Monthly = Monthly { monthly_day_of_week   :: Int
+                       , monthly_interval      :: Integer
                        , monthly_week_of_month :: Int
                        } deriving (Eq, Show, Generic)
 
@@ -416,7 +416,7 @@ instance ToJSON Monthly where
 instance FromJSON Monthly where parseJSON = genericParseJSON (myOptions "monthly_")
 
 data Weekly = Weekly { weekly_days_of_week :: [Int]
-                     , weekly_interval :: Integer
+                     , weekly_interval     :: Integer
                      } deriving (Eq, Show, Generic)
 
 instance ToJSON Weekly where
@@ -426,10 +426,10 @@ instance FromJSON Weekly where parseJSON = genericParseJSON (myOptions "weekly_"
 
 
 
-data EventSelf = EventSelf { eventSelf_actions :: EventSelfActions
+data EventSelf = EventSelf { eventSelf_actions    :: EventSelfActions
                            , eventSelf_pay_status :: EventSelfPayStatus
-                           , eventSelf_role :: Role
-                           , eventSelf_rsvp :: EventSelfRSVP
+                           , eventSelf_role       :: Role
+                           , eventSelf_rsvp       :: EventSelfRSVP
                            } deriving (Eq, Show, Generic)
 
 instance ToJSON EventSelf where
@@ -437,8 +437,8 @@ instance ToJSON EventSelf where
   toEncoding = genericToEncoding (myOptions "eventSelf_")
 instance FromJSON EventSelf where parseJSON = genericParseJSON (myOptions "eventSelf_")
 
-data EventSelfRSVP = EventSelfRSVP { eventSelfRSVP_answers :: [Text]
-                                   , eventSelfRSVP_guests :: Integer
+data EventSelfRSVP = EventSelfRSVP { eventSelfRSVP_answers  :: [Text]
+                                   , eventSelfRSVP_guests   :: Integer
                                    , eventSelfRSVP_response :: Response
                                    } deriving (Eq, Show, Generic)
 
@@ -450,9 +450,9 @@ instance FromJSON EventSelfRSVP where parseJSON = genericParseJSON (myOptions "e
 data Response = Yes | No | Waitlist | YesPendingPayment deriving (Eq, Show, Generic)
 
 responseToJSON :: Response -> Text
-responseToJSON Yes = "yes"
-responseToJSON No = "no"
-responseToJSON Waitlist = "waitlist"
+responseToJSON Yes               = "yes"
+responseToJSON No                = "no"
+responseToJSON Waitlist          = "waitlist"
 responseToJSON YesPendingPayment = "yes_pending_payment"
 
 instance ToJSON Response where
@@ -479,20 +479,20 @@ data EventSelfActions = Announce |
         deriving (Eq, Show, Generic)
 
 eventSelfActionsToJSON :: EventSelfActions -> Text
-eventSelfActionsToJSON Announce = "announce"
-eventSelfActionsToJSON Attendance = "attendance"
-eventSelfActionsToJSON Copy = "copy"
-eventSelfActionsToJSON Comment = "comment"
-eventSelfActionsToJSON Payments = "payments"
-eventSelfActionsToJSON Publish = "publish"
+eventSelfActionsToJSON Announce             = "announce"
+eventSelfActionsToJSON Attendance           = "attendance"
+eventSelfActionsToJSON Copy                 = "copy"
+eventSelfActionsToJSON Comment              = "comment"
+eventSelfActionsToJSON Payments             = "payments"
+eventSelfActionsToJSON Publish              = "publish"
 eventSelfActionsToJSON EventSelfActionsEdit = "edit"
-eventSelfActionsToJSON EditHosts = "edit_hosts"
-eventSelfActionsToJSON EmailAttendees = "email_attendees"
-eventSelfActionsToJSON Delete = "delete"
-eventSelfActionsToJSON Rsvp = "rsvp"
-eventSelfActionsToJSON Wait = "wait"
-eventSelfActionsToJSON Dues = "dues"
-eventSelfActionsToJSON UploadPhoto = "upload_photo"
+eventSelfActionsToJSON EditHosts            = "edit_hosts"
+eventSelfActionsToJSON EmailAttendees       = "email_attendees"
+eventSelfActionsToJSON Delete               = "delete"
+eventSelfActionsToJSON Rsvp                 = "rsvp"
+eventSelfActionsToJSON Wait                 = "wait"
+eventSelfActionsToJSON Dues                 = "dues"
+eventSelfActionsToJSON UploadPhoto          = "upload_photo"
 
 instance ToJSON EventSelfActions where
   toJSON = genericToJSONString eventSelfActionsToJSON
@@ -512,14 +512,14 @@ data EventSelfPayStatus = ESPSNone |
                           deriving (Eq, Show, Generic)
 
 eventSelfPayStatusToJSON :: EventSelfPayStatus -> Text
-eventSelfPayStatusToJSON ESPSNone = "none"
-eventSelfPayStatusToJSON Paid = "paid"
-eventSelfPayStatusToJSON PartiallyPaid = "partially_paid"
-eventSelfPayStatusToJSON PaymentPending = "payment_pending"
-eventSelfPayStatusToJSON EcheckPending = "echeck_pending"
-eventSelfPayStatusToJSON RefundPending = "refund_pending"
+eventSelfPayStatusToJSON ESPSNone          = "none"
+eventSelfPayStatusToJSON Paid              = "paid"
+eventSelfPayStatusToJSON PartiallyPaid     = "partially_paid"
+eventSelfPayStatusToJSON PaymentPending    = "payment_pending"
+eventSelfPayStatusToJSON EcheckPending     = "echeck_pending"
+eventSelfPayStatusToJSON RefundPending     = "refund_pending"
 eventSelfPayStatusToJSON PartiallyRefunded = "Partially_refunded"
-eventSelfPayStatusToJSON Refunded = "refunded"
+eventSelfPayStatusToJSON Refunded          = "refunded"
 
 instance ToJSON EventSelfPayStatus where
   toJSON = genericToJSONString eventSelfPayStatusToJSON
@@ -529,8 +529,8 @@ instance FromJSON EventSelfPayStatus where
   parseJSON = genericParseJSONString eventSelfPayStatusToJSON
 
 data RSVP = RSVP { rsvp_created :: Integer
-                 , rsvp_id :: Integer
-                 , rsvp_member :: RSVPMember
+                 , rsvp_id      :: Integer
+                 , rsvp_member  :: RSVPMember
                  , rsvp_updated :: Integer
                  } deriving (Eq, Show, Generic)
 
@@ -539,14 +539,14 @@ instance ToJSON RSVP where
   toEncoding = genericToEncoding (myOptions "rsvp_")
 instance FromJSON RSVP where parseJSON = genericParseJSON (myOptions "rsvp_")
 
-data RSVPMember = RSVPMember { rsvpMember_bio :: Text
+data RSVPMember = RSVPMember { rsvpMember_bio           :: Text
                              , rsvpMember_event_context :: Maybe Text
-                             , rsvpMember_id :: Integer
-                             , rsvpMember_name :: Text
-                             , rsvpMember_photo :: Maybe Photo
-                             , rsvpMember_role :: Role
-                             , rsvpMember_self :: Maybe Text -- requested by self
-                             , rsvpMember_title :: Maybe Text
+                             , rsvpMember_id            :: Integer
+                             , rsvpMember_name          :: Text
+                             , rsvpMember_photo         :: Maybe Photo
+                             , rsvpMember_role          :: Role
+                             , rsvpMember_self          :: Maybe Text -- requested by self
+                             , rsvpMember_title         :: Maybe Text
                              } deriving (Eq, Show, Generic)
 
 instance ToJSON RSVPMember where
@@ -561,9 +561,9 @@ data Role = AssistantOrganizer |
 
 roleToJSON :: Role -> Text
 roleToJSON AssistantOrganizer = "assistant_organizer"
-roleToJSON CoOrganizer = "coorganizer"
-roleToJSON EventOrganizer = "event_organizer"
-roleToJSON Organizer = "organizer"
+roleToJSON CoOrganizer        = "coorganizer"
+roleToJSON EventOrganizer     = "event_organizer"
+roleToJSON Organizer          = "organizer"
 
 instance ToJSON Role where
   toJSON = genericToJSONString roleToJSON
@@ -659,7 +659,7 @@ data Scroll = RecentPast |
               FutureOrPast deriving (Eq, Show, Generic)
 
 scrollToText :: Scroll -> Text
-scrollToText RecentPast = "recent_past"
+scrollToText RecentPast   = "recent_past"
 scrollToText NextUpcoming = "next_upcoming"
 scrollToText FutureOrPast = "future_or_past"
 
@@ -669,11 +669,11 @@ data Status = Cancelled | Draft | Past | Proposed | Suggested | Upcoming derivin
 
 statusToJSON :: Status -> Text
 statusToJSON Cancelled = "cancelled"
-statusToJSON Draft = "draft"
-statusToJSON Past = "past"
-statusToJSON Proposed = "proposed"
+statusToJSON Draft     = "draft"
+statusToJSON Past      = "past"
+statusToJSON Proposed  = "proposed"
 statusToJSON Suggested = "suggested"
-statusToJSON Upcoming = "upcoming"
+statusToJSON Upcoming  = "upcoming"
 
 instance ToJSON Status where
   toJSON = genericToJSONString statusToJSON

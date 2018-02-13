@@ -1,15 +1,15 @@
-{-# LANGUAGE DataKinds         #-}
-{-# LANGUAGE TypeOperators     #-}
+{-# LANGUAGE DataKinds     #-}
+{-# LANGUAGE TypeOperators #-}
 
 module Meetup.API where
 
-import Data.Text (Text)
+import           Data.Text      (Text)
 
-import Data.Proxy
-import Servant.API
-import Servant.Client
+import           Data.Proxy
+import           Servant.API
+import           Servant.Client
 
-import Meetup.Data
+import           Meetup.Data
 
 type RateLimits a = Headers '[Header "X-RateLimit-Limit" Int
                              ,Header "X-RateLimit-Remaining" Int

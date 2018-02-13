@@ -1,17 +1,17 @@
 {-# LANGUAGE OverloadedStrings #-}
 module Main where
 
-import           Data.Semigroup      ((<>))
-import           Data.Text hiding (group)
+import           Data.Semigroup          ((<>))
+import           Data.Text               hiding (group)
 import           Meetup.API
+import           Network.HTTP.Client
+import           Network.HTTP.Client.TLS
 import           Options.Applicative
-import Servant.API
-import  Servant.Client
-import  Network.HTTP.Client
-import  Network.HTTP.Client.TLS
+import           Servant.API
+import           Servant.Client
 
 data CommandLineOptions = CommandLineOptions { clo_apiKey :: Maybe Text
-                                             , clo_group :: Text } deriving (Eq, Show)
+                                             , clo_group  :: Text } deriving (Eq, Show)
 
 apiKey :: Parser Text
 apiKey = strOption

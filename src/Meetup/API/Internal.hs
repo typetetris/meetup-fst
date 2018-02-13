@@ -14,8 +14,8 @@ module Meetup.API.Internal
 where
 
 import           Data.Aeson
-import           Data.Aeson.Types
 import           Data.Aeson.Encoding (text)
+import           Data.Aeson.Types
 import qualified Data.HashMap.Strict as M (fromList, lookup)
 import           Data.List           (intersperse)
 import           Data.Maybe          (fromMaybe)
